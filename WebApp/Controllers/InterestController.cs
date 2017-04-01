@@ -22,11 +22,23 @@ namespace WebApp.Controllers
         [Route("api/Interest/ForAccount/{id}")]
         public IHttpActionResult GetInterests(int id)
         {
-            return Ok(service.getByAccountId(id));
+            var c = service.getByAccountId(id);
+            if (c == null)
+                return BadRequest();
+            return Ok(c);
         }
         public IHttpActionResult Get()
         {
             return Ok(service.getAll());
+        }
+
+        [Route("api/Interest/ForEvent/{id}")]
+        public IHttpActionResult GetInterestsEvent(int id)
+        {
+            var c = service.getByEventId(id);
+            if (c == null)
+                return BadRequest();
+            return Ok(c);
         }
         [Route("api/Interest/Add/{interestId}/{accountId}")]
         public IHttpActionResult Post(int interestId, int accountId)
@@ -44,5 +56,7 @@ namespace WebApp.Controllers
                 return BadRequest();
             return Ok();
         }
+
+       
     }
 }

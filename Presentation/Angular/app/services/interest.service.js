@@ -35,6 +35,11 @@ System.register(["@angular/core", "@angular/http", "rxjs/Rx"], function (exports
                         .post(this.baseUrl + "/Add/" + idInterests + "/" + idAccount, this.options)
                         .toPromise();
                 }
+                addToEvent(eventId, interestId) {
+                    return this.http
+                        .post(this.baseUrl + "/AddToEvent/" + interestId + "/" + eventId, this.options)
+                        .toPromise();
+                }
                 removeInterests(idAccount, idInterests) {
                     return this.http
                         .delete(this.baseUrl + "/Remove/" + idInterests + "/" + idAccount, this.options)

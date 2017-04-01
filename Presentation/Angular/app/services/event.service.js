@@ -44,6 +44,11 @@ System.register(["@angular/core", "@angular/http", "rxjs/Rx"], function (exports
                         .then(this.extractData)
                         .catch(this.handleError);
                 }
+                addInterest(eventId, interestId) {
+                    return this.http
+                        .post(this.baseUrl + "/Add/" + eventId + "/" + interestId, this.options)
+                        .toPromise();
+                }
                 extractData(res) {
                     let body = res.json();
                     return body || {};

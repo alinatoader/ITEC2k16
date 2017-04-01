@@ -24,12 +24,12 @@ namespace Business.Services
             using (var uow = new UnitOfWork())
             {
                 var repo = uow.getRepository<DBEvent>();
-                var existing = repo.getAll().FirstOrDefault(a => a.StartTime.ToString() == model.StartTime && a.Title == model.Title);
+                var existing = repo.getAll().FirstOrDefault(a => a.StartTime == DateTime.Parse(model.StartTime) && a.Title == model.Title);
                 if (existing != null)
                     return null;
                 repo.save(em.ToDBModel(model));
                 uow.saveChanges();
-                existing = repo.getAll().FirstOrDefault(a => a.StartTime.ToString() == model.StartTime && a.Title == model.Title);
+                existing = repo.getAll().FirstOrDefault(a => a.StartTime == DateTime.Parse(model.StartTime) && a.Title == model.Title);
                 return em.ToWebModel(existing);
             }
         }
@@ -103,7 +103,23 @@ namespace Business.Services
              }
         }
 
-        
+        public int addInterest(int eventId, int interestId)
+        {
+            using (var uow = new UnitOfWork())
+            {
+                var ev = uow.getRepository<DBEvent>().get(eventId);
+                if (ev == null)
+                    return -1;
+                var it = uow.getRepository<DBInterest>().get(interestId);
+                if (it == null)
+                    return -1;
+                ev.Tags.Add(it);
+                uow.saveChanges();
+                return 0;
+            }
+        }
+
+
     }
 }
 

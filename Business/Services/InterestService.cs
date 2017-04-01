@@ -89,5 +89,21 @@ namespace Business.Services
                 }
             
         }
+
+        public List<WebInterest> getByEventId(int id)
+        {
+            using (var uow = new UnitOfWork())
+            {
+                List<WebInterest> list = new List<WebInterest>();
+                var ev = uow.getRepository<DBEvent>().get(id);
+                if (ev == null)
+                    return null;
+                foreach (var i in ev.Tags)
+                    list.Add(im.ToWebModel(i));
+                return list;
+            }
+        }
+
+
     }
 }

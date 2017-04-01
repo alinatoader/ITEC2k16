@@ -61,5 +61,14 @@ namespace WebApp.Controllers
             return Ok(ok);
         }
 
+        [Route("api/Event/Add/{eventId}/{interestId}")]
+        public IHttpActionResult Post( int eventId, int interestId)
+        {
+            var c = service.addInterest(eventId,interestId);
+            if (c == -1)
+                return BadRequest();
+            return Ok(c);
+        }
+
     }
 }

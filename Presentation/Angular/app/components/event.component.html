@@ -24,15 +24,20 @@
                     </div>
                     <hr>
                     <h3 style="text-align: center">Add Interests</h3>
+                    <hr>
                     <select  (change)="onSelectingType()" id="selecTypes">
+                        <br>
                         <option  *ngFor="let type of interestTypes" id={{type.Id}}>{{type.Name}}</option>
                     </select>
-                    <hr>
+                    <br>
                     <div class="scrollbox">
-                        <div *ngFor="let e of selectedInterests">
-                            <input type="checkbox" id="e.Id" style="float: left;width: 150px">{{e.Name}}
+                        <div *ngFor="let e of allInterests">
+                            <div *ngIf="e.Type==selectedType">
+                            <input type="checkbox" id="e.Id" style="float: left;width: 150px" [(ngModel)]="e.Checked" name={{e.Name}}>{{e.Name}}
+                            </div>
                         </div>
                     </div>
+                    <br>
                     <div class="form-group">
                         <button class="createButton" (click)="saveEvent()">Save</button>        
                     </div>
@@ -50,10 +55,18 @@
                         {{event.Description}}
                     </h5>
                     <h4 >When: {{event.StartTime}}</h4>
-                    <div *ngIf="event.Joined">
+                    <div class="attendants">
+                        <h4 class="attendantsShowing">Attendants</h4>
+                        <ul class="listAttendants">
+                            <li *ngFor="let attendant of event.Attendants">
+                                {{attendant.FirstName}}  {{attendant.LastName}}
+                            </li>
+                        </ul>   
+                    </div>
+                    <div *ngIf="event.Joined" >
                         <button (click)="unjoinEvent(event.Id)">Unjoin</button>
                     </div>
-                    <div *ngIf="!event.Joined">
+                    <div *ngIf="!event.Joined" style="float: right">
                         <button (click)="joinEvent(event.Id)">Join</button>
                     </div>
                 </div>    

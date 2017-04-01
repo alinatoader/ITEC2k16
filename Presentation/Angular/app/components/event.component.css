@@ -1,6 +1,6 @@
 .event{
     width: 350px;
-    height: 250px;
+    height: 300px;
     display: block;
     border: 3px;
     border-style: double;
@@ -39,4 +39,42 @@ select{
 .scrollbox {
   height:100px;
   overflow-y:scroll;
+}
+
+.listAttendants{
+    display: none;
+    position: absolute;
+    background-color: antiquewhite;
+    min-width: 160px;
+    z-index: 1;
+}
+
+.listAttendants li{
+    display: block;
+    text-decoration: none;
+    color: black;
+}
+
+.attendants{
+    position: relative;
+    display: inline-block;
+    min-width: 160px;
+}
+
+.attendants:hover .listAttendants{
+    display: block;
+}
+
+.attendants:hover .attendantsShowing{
+    background-color: antiquewhite;
+}
+
+.attendantsShowing{
+    background: snow;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    
 }

@@ -22,6 +22,12 @@ export class InterestService {
 
      }
 
+     addToEvent(eventId:number,interestId:number){
+         return this.http
+            .post(this.baseUrl+"/AddToEvent/"+interestId+"/"+eventId,this.options)
+            .toPromise();
+     }
+
      removeInterests(idAccount:number,idInterests:number){
          return this.http
             .delete(this.baseUrl+"/Remove/"+idInterests+"/"+idAccount,this.options)

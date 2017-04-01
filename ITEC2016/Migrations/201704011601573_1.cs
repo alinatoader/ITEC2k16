@@ -3,7 +3,7 @@ namespace ITEC2016.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class start : DbMigration
+    public partial class _1 : DbMigration
     {
         public override void Up()
         {

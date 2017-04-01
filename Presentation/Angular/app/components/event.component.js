@@ -41,6 +41,7 @@ System.register(["@angular/core", "@angular/router", "../services/event.service"
                     this.interestService = interestService;
                     this.typeofinterestService = typeofinterestService;
                     this.newEvent = {};
+                    this.allInterests = [];
                     this.matchedEvents = false;
                 }
                 loadEvents() {
@@ -80,6 +81,14 @@ System.register(["@angular/core", "@angular/router", "../services/event.service"
                         });
                     });
                     this.matchedEvents = true;
+                    this.getEventAttendants();
+                }
+                getEventAttendants() {
+                    this.allEvents.forEach(event => {
+                        this.eventService.getAttendants(event.Id).then(attendants => {
+                            event.Attendants = attendants;
+                        }).catch(error => { console.log("Error at getting attendats."); });
+                    });
                 }
                 joinEvent(idEvent) {
                     this.accountService.joinEvent(this.user.Id, idEvent).then(r => {
@@ -97,14 +106,6 @@ System.register(["@angular/core", "@angular/router", "../services/event.service"
                         console.log("Error at joining event");
                     });
                 }
-                getAttendats(idEvent) {
-                    this.eventService.getAttendants(idEvent).then(e => {
-                        return e;
-                    })
-                        .catch(error => {
-                        console.log("Error at getting attendats");
-                    });
-                }
                 saveEvent() {
                     if (this.newEvent.Title == null || this.newEvent.Description == null || this.newEvent.StartTime == null || this.time == null)
                         return;
@@ -115,37 +116,42 @@ System.register(["@angular/core", "@angular/router", "../services/event.service"
                         this.allEvents.push(ev);
                         this.joinEvent(ev.Id);
                         this.newEvent = {};
+                        this.saveInterestsToNewEvent(ev.Id);
                     })
                         .catch(error => {
                         console.log("Error at saving event");
                     });
                 }
-                getInterests(id) {
-                    this.interestService.getInterests(id).then(i => {
-                        this.selectedInterests = i;
-                    })
-                        .catch(e => console.log("Error at getting interests in event component"));
+                saveInterestsToNewEvent(id) {
+                    this.allInterests.forEach(interest => {
+                        if (interest.Checked == true)
+                            this.eventService.addInterest(id, interest.Id).then(r => {
+                                this.interestService.addInterests(this.user.Id, interest.Id).then(rr => {
+                                    interest.Checked = false;
+                                }).catch(e => console.log("Error at saving interests to my account.."));
+                            })
+                                .catch(e => console.log("Error at saving interests"));
+                    });
                 }
                 initTypesOfInterest() {
                     this.typeofinterestService.getTypes().then(types => {
                         this.interestTypes = JSON.parse(types);
-                        this.initSelectedInterests();
+                        this.selectedType = this.interestTypes[0].Name;
+                        this.initAllInterests();
                     }).catch(error => console.log("Error at getting interest types.."));
                 }
-                initSelectedInterests() {
-                    this.interestService.getInterests(this.interestTypes[0].Id).then(i => {
-                        this.selectedInterests = i;
-                    })
-                        .catch(e => {
-                        console.log("Error at init selected interests");
+                initAllInterests() {
+                    this.interestTypes.forEach(i => {
+                        this.interestService.getInterests(i.Id).then(ii => {
+                            ii.forEach(iii => iii.Checked = false);
+                            this.allInterests = this.allInterests.concat(ii);
+                        })
+                            .catch(e => console.log("Error at getting interests."));
                     });
                 }
                 onSelectingType() {
                     var selectObject = document.getElementById("selecTypes");
-                    var selectedType = selectObject.options[selectObject.selectedIndex].id;
-                    this.interestService.getInterests(selectedType).then(interests => {
-                        this.selectedInterests = interests;
-                    }).catch(error => console.log("Error at selecting new type of interest"));
+                    this.selectedType = selectObject.options[selectObject.selectedIndex].value;
                 }
                 ngOnInit() {
                     this.checkCredentials();

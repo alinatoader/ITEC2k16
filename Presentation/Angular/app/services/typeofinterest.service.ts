@@ -5,7 +5,7 @@ import "rxjs/Rx"
 
 @Injectable()
 export class TypeOfInterestService {
-    private baseUrl: string = 'http://localhost:49280/api/TypeOfInterest';
+    private baseUrl: string = 'http://localhost:58107/api/TypeOfInterest';
     private options: RequestOptions;
     private headers: Headers;
     

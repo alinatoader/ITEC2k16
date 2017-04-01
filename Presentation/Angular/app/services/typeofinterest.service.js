@@ -26,7 +26,7 @@ System.register(["@angular/core", "@angular/http", "rxjs/Rx"], function (exports
             TypeOfInterestService = class TypeOfInterestService {
                 constructor(http) {
                     this.http = http;
-                    this.baseUrl = 'http://localhost:49280/api/TypeOfInterest';
+                    this.baseUrl = 'http://localhost:58107/api/TypeOfInterest';
                     this.headers = new http_1.Headers({ 'Content-Type': 'application/json', 'Accept': 'q=0.8;application/json;q=0.9' });
                     this.options = new http_1.RequestOptions({ headers: this.headers });
                 }

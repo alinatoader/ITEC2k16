@@ -31,6 +31,14 @@ export class EventService {
             .then(this.extractData)
             .catch(this.handleError);
     }
+
+    addInterest(eventId:number,interestId:number){
+         return this.http
+            .post(this.baseUrl+"/Add/"+eventId+"/"+interestId,this.options)
+            .toPromise();
+     }
+
+
      private extractData(res: Response) {
         let body = res.json();
         return body || {};
