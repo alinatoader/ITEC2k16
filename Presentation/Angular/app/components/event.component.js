@@ -1,4 +1,4 @@
-System.register(["@angular/core", "@angular/router", "../services/event.service", "../services/account.service", "../services/interest.service", "../services/typeofinterest.service"], function (exports_1, context_1) {
+System.register(["@angular/core", "@angular/router", "../services/event.service", "../services/account.service", "../services/interest.service", "../services/typeofinterest.service", "../services/authentication.service"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10,7 +10,7 @@ System.register(["@angular/core", "@angular/router", "../services/event.service"
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, router_1, event_service_1, account_service_1, interest_service_1, typeofinterest_service_1, EventComponent;
+    var core_1, router_1, event_service_1, account_service_1, interest_service_1, typeofinterest_service_1, authentication_service_1, EventComponent;
     return {
         setters: [
             function (core_1_1) {
@@ -30,16 +30,20 @@ System.register(["@angular/core", "@angular/router", "../services/event.service"
             },
             function (typeofinterest_service_1_1) {
                 typeofinterest_service_1 = typeofinterest_service_1_1;
+            },
+            function (authentication_service_1_1) {
+                authentication_service_1 = authentication_service_1_1;
             }
         ],
         execute: function () {
             EventComponent = class EventComponent {
-                constructor(router, eventService, accountService, interestService, typeofinterestService) {
+                constructor(router, eventService, accountService, interestService, typeofinterestService, authService) {
                     this.router = router;
                     this.eventService = eventService;
                     this.accountService = accountService;
                     this.interestService = interestService;
                     this.typeofinterestService = typeofinterestService;
+                    this.authService = authService;
                     this.newEvent = {};
                     this.allInterests = [];
                     this.matchedEvents = false;
@@ -82,12 +86,20 @@ System.register(["@angular/core", "@angular/router", "../services/event.service"
                     });
                     this.matchedEvents = true;
                     this.getEventAttendants();
+                    this.getEventInterests();
                 }
                 getEventAttendants() {
                     this.allEvents.forEach(event => {
                         this.eventService.getAttendants(event.Id).then(attendants => {
                             event.Attendants = attendants;
                         }).catch(error => { console.log("Error at getting attendats."); });
+                    });
+                }
+                getEventInterests() {
+                    this.allEvents.forEach(event => {
+                        this.interestService.getInterestsForEvent(event.Id).then(interests => {
+                            event.Interests = interests;
+                        }).catch(error => console.log(error));
                     });
                 }
                 joinEvent(idEvent) {
@@ -107,12 +119,18 @@ System.register(["@angular/core", "@angular/router", "../services/event.service"
                     });
                 }
                 saveEvent() {
-                    if (this.newEvent.Title == null || this.newEvent.Description == null || this.newEvent.StartTime == null || this.time == null)
+                    if (this.newEvent.Title == null || this.newEvent.Description == null || this.date == null || this.time == null)
                         return;
-                    this.newEvent.Date = this.newEvent.StartTime + " " + this.time;
+                    this.newEvent.StartTime = this.date + " " + this.time;
+                    console.log(this.newEvent.StartTime);
                     this.newEvent.Id = 0;
                     this.eventService.postEvent(this.newEvent).then(ev => {
                         ev.Joined = true;
+                        ev.Interests = [];
+                        this.allInterests.forEach(interest => {
+                            if (interest.Checked == true)
+                                ev.Interests.push(interest);
+                        });
                         this.allEvents.push(ev);
                         this.joinEvent(ev.Id);
                         this.newEvent = {};
@@ -162,10 +180,11 @@ System.register(["@angular/core", "@angular/router", "../services/event.service"
             EventComponent = __decorate([
                 core_1.Component({
                     templateUrl: 'app/components/event.component.html',
-                    providers: [event_service_1.EventService, account_service_1.AccountService, interest_service_1.InterestService, typeofinterest_service_1.TypeOfInterestService]
+                    providers: [event_service_1.EventService, account_service_1.AccountService, interest_service_1.InterestService, typeofinterest_service_1.TypeOfInterestService, authentication_service_1.AuthenticationService]
                 }),
                 __metadata("design:paramtypes", [router_1.Router, event_service_1.EventService, account_service_1.AccountService,
-                    interest_service_1.InterestService, typeofinterest_service_1.TypeOfInterestService])
+                    interest_service_1.InterestService, typeofinterest_service_1.TypeOfInterestService,
+                    authentication_service_1.AuthenticationService])
             ], EventComponent);
             exports_1("EventComponent", EventComponent);
         }

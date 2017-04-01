@@ -1,14 +1,15 @@
-import {Component, OnInit}      from '@angular/core';
+import {Component, OnInit,HostListener}      from '@angular/core';
 import {Router} from '@angular/router';
 
 import {EventService} from '../services/event.service';
 import {AccountService} from '../services/account.service';
 import {InterestService} from '../services/interest.service';
 import {TypeOfInterestService} from '../services/typeofinterest.service';
+import {AuthenticationService} from '../services/authentication.service';
 
 @Component({
     templateUrl: 'app/components/event.component.html',
-    providers:[EventService,AccountService,InterestService,TypeOfInterestService]
+    providers:[EventService,AccountService,InterestService,TypeOfInterestService,AuthenticationService]
 })
 
 export class EventComponent implements OnInit {
@@ -17,6 +18,7 @@ export class EventComponent implements OnInit {
     private user:any;
     private newEvent:any={};
     private time:any;
+    private date:any;
     private allInterests:any=[];
     private interestTypes:any;
     private selectedType:any;
@@ -24,7 +26,8 @@ export class EventComponent implements OnInit {
     private matchedEvents:boolean=false;
 
     constructor(private router:Router,private eventService:EventService,private accountService:AccountService,
-                private interestService:InterestService,private typeofinterestService:TypeOfInterestService) {
+                private interestService:InterestService,private typeofinterestService:TypeOfInterestService,
+                private authService:AuthenticationService) {
       
     }
 
@@ -69,6 +72,7 @@ export class EventComponent implements OnInit {
         })
         this.matchedEvents=true;
         this.getEventAttendants();
+        this.getEventInterests();
     }
 
     getEventAttendants(){
@@ -76,6 +80,14 @@ export class EventComponent implements OnInit {
             this.eventService.getAttendants(event.Id).then(attendants=>{
                 event.Attendants=attendants;
             }).catch(error=>{console.log("Error at getting attendats.")});
+        })
+    }
+
+    getEventInterests(){
+        this.allEvents.forEach(event=>{
+            this.interestService.getInterestsForEvent(event.Id).then(interests=>{
+                event.Interests=interests;
+            }).catch(error=>console.log(error));
         })
     }
 
@@ -99,12 +111,18 @@ export class EventComponent implements OnInit {
 
 
     saveEvent(){
-        if(this.newEvent.Title==null||this.newEvent.Description==null||this.newEvent.StartTime==null||this.time==null)
+        if(this.newEvent.Title==null||this.newEvent.Description==null||this.date==null||this.time==null)
             return;
-        this.newEvent.Date=this.newEvent.StartTime+" "+this.time;
+        this.newEvent.StartTime=this.date+" "+this.time;
+        console.log(this.newEvent.StartTime);
         this.newEvent.Id=0;
         this.eventService.postEvent(this.newEvent).then(ev=>{
             ev.Joined=true;
+            ev.Interests=[];
+            this.allInterests.forEach(interest => {
+                if(interest.Checked==true)
+                    ev.Interests.push(interest);     
+            });
             this.allEvents.push(ev);
             this.joinEvent(ev.Id);
             this.newEvent={};

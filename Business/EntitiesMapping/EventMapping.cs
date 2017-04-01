@@ -1,6 +1,7 @@
 ﻿using ITEC2016.DBModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,9 +14,8 @@ namespace Business.EntitiesMapping
         public DBEvent ToDBModel(WebEvent model)
         {
             DBEvent Event = new DBEvent();
-
             Event.Id = model.Id;
-            Event.StartTime = DateTime.Parse(model.StartTime);
+            Event.StartTime = DateTime.ParseExact(model.StartTime, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
             Event.Description = model.Description;
             Event.Title = model.Title;
             return Event;

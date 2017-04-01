@@ -44,21 +44,28 @@ select{
 .listAttendants{
     display: none;
     position: absolute;
-    background-color: antiquewhite;
-    min-width: 160px;
+    background-color: lightcyan;
+    min-width: 130px;
     z-index: 1;
+    padding: 0;
+    margin: 0;
+    text-align: center;
 }
 
 .listAttendants li{
     display: block;
     text-decoration: none;
     color: black;
+    padding: 0;
+    margin: 0;
 }
 
 .attendants{
     position: relative;
     display: inline-block;
-    min-width: 160px;
+    min-width: 130px;
+    padding: 0;
+    margin: 0;
 }
 
 .attendants:hover .listAttendants{
@@ -66,15 +73,47 @@ select{
 }
 
 .attendants:hover .attendantsShowing{
-    background-color: antiquewhite;
+    background-color: lightblue;
+    font-size: 18px;
+    padding: 7px 33px;
 }
 
 .attendantsShowing{
-    background: snow;
-    padding: 12px;
+    background: lightcyan;
+    padding: 5px 30px;
     font-size: 16px;
     border: none;
     cursor: pointer;
     text-align: center;
     
+}
+
+.listInterests{
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+
+}
+
+.listInterests li:hover{
+    display: block;
+    background-color: antiquewhite;
+    cursor: pointer;
+}
+
+.joinbutton{
+    display: inline;
+    font-size: 16px;
+    background-color:lightcyan;
+    border: none;
+    color: black;
+    padding: 5px 30px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.joinbutton:hover{
+    background-color:lightblue;
+    font-size: 18px;
+    padding: 7px 33px;
 }

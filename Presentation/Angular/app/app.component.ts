@@ -1,9 +1,15 @@
-import { Component } from '@angular/core';
+import { Component,HostListener } from '@angular/core';
 
 @Component({
     selector: 'app',
-    template: "<router-outlet></router-outlet>"
+    template: "<router-outlet></router-outlet>",
 })
+
+
+
 export class AppComponent {
-    name = 'Quick start Angular 2';
+
+    constructor(){}
+
+   
 } 
