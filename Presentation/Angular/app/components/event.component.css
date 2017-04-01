@@ -1,0 +1,42 @@
+.event{
+    width: 350px;
+    height: 250px;
+    display: block;
+    border: 3px;
+    border-style: double;
+    word-break: break-all;
+    padding: 10px;
+    margin: 10px;
+    float: right;
+    margin-right: 30px;
+}
+.createEvent{
+    width: 350px;
+    min-height: 600px;
+    display: block;
+    border: 3px;
+    border-style: double;
+    word-break: break-all;
+    padding: 10px;
+    margin: 10px;
+    float: left;
+    margin-left: 30px;
+}
+
+.eventsList{
+    width: 900px;
+    float: right;
+}
+
+ul{
+    list-style-type: none;
+}
+
+select{
+    width: 320px;
+}
+
+.scrollbox {
+  height:100px;
+  overflow-y:scroll;
+}

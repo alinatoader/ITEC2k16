@@ -1,0 +1,79 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="interests.component.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+    
+    <div class="parent" *ngIf="matchInterests==true">
+    <h2 style="text-align: center"> Choose your interests !! </h2>
+
+        <div  class="food">
+            <h3 style="text-align: center">
+                Food
+            </h3>
+            <hr>
+            <ul>
+                <li *ngFor="let f of food">{{f.Name}}
+                    <div class="option">
+                        <div *ngIf="!f.isMine">
+                            <a>
+                                <span class="glyphicon glyphicon-plus-sign"></span>
+                            </a>
+                        </div>
+                        <div *ngIf="f.isMine">
+                            <a>
+                                <span class="glyphicon glyphicon-minus-sign"></span>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div  class="location">
+            <h3 style="text-align: center">
+                Location
+            </h3>
+            <hr>
+            <ul>
+                <li *ngFor="let f of location">
+                    {{f.Name}}
+                    <div class="option">
+                        <div *ngIf="!f.isMine">
+                                    <a>
+                                        <span class="glyphicon glyphicon-plus-sign"></span>
+                                    </a>
+                                </div>
+                                <div *ngIf="f.isMine">
+                                    <a>
+                                        <span class="glyphicon glyphicon-minus-sign"></span>
+                                    </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div  class="eatingplace">
+            <h3 style="text-align: center">
+                Eating Places
+            </h3>
+            <hr>
+            <ul>
+                <li *ngFor="let f of places">
+                    {{f.Name}}
+                    <div class="option">
+                        <div *ngIf="!f.isMine">
+                                <a onclick="click()">
+                                    <span class="glyphicon glyphicon-plus-sign" ></span>
+                                </a>
+                            </div>
+                            <div *ngIf="f.isMine">
+                                <a onclick="click()">
+                                    <span class="glyphicon glyphicon-minus-sign" ></span>
+                                </a>
+                            </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>

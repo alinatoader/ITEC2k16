@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <title> Virtual Lounge </title>
+    <meta name="author" content="Ali&Bogdi" />
+    <meta name="keywords" content="angular,bootstrap,demo" />
+    <meta name="description" content="ITEC Solution" />
+    <meta itemprop="copyrightYear" content="2016" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <base href="/">
+
+    <!--Custom fonts import-->
+    <link href='/fonts/Dancing_Script/DancingScript-Bold.ttf' rel='stylesheet' type='application/x-font-woff'>
+    <link href='/fonts/Dancing_Script/DancingScript-Regular.ttf' rel='stylesheet' type='application/x-font-woff'>
+    <link href='/fonts/Dancing_Script/RopaSans-Italic.ttf' rel='stylesheet' type='application/x-font-woff'>
+    <link href='/fonts/Dancing_Script/RopaSans-Regular.ttf' rel='stylesheet' type='application/x-font-woff'>
+    <link rel="icon" type="image/png" sizes="16x16" href="/icon.png">
+    <!--Font awesome icons-->
+    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css" type="text/css" />
+
+    <!--Bootstrap css-->
+    <link rel="stylesheet" href="lib/bootstrap-sass/css/bootstrap.min.css" type="text/css" />
+
+    <!--Main generated style-->
+    <link rel='stylesheet' href='scss/style.css' />
+
+    <!--Angular 2 requirements-->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="systemjs.config.js"></script>
+    <script>
+        System.import('app').catch(function(err) {
+            console.error(err);
+        });
+    </script>
+
+
+</head>
+
+<body class="no-select" spellcheck="false">
+    <div class="col-xs-12">
+        <app>
+            <div style="margin: 0 auto;width: 25%;margin-top:50%;">
+                <i class="fa fa-spinner fa-spin"></i>
+                <span>Loading...</span>
+            </div>
+        </app>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+ITEC 2016
+	Virtual lounge
+		-People can share their lunch break interests and go out or order in together
+		-Offer prioritized lunch based on individual interests and past experience
+		-Create user at least name
+			~add/import interests or skip
+		-When logging in, if you are solo you will get a funny message until someone else appears
+		-An interest = food / location / type of location
+		-Suggestions based on your interest;
+		-CRUD interest
+		-CRUD event [title or description of the event, interests,start time] 
+		-List of people who go 
+		-Join option on the event.
+		-Possibility to add [by everyone] /edit [just by you]  only 1  comment to a joined event
+		-You can't join an event which already started.
+		-Only one event join at same time.
+		-You can unattend
+		-Update interests when you join an event
+		-Top 5 interests / events
+			--Interests = a. Types of food; b.Location; c.Eating places
+
+Account: join event which hasn't started yet...if you aren't going to another at the same time
+	/unjoin ,add interest/remove , login +verifiy single
+Interest: top interest
+Comment: add (only one!! if you are going),update,remove, getAll(eventId)
+Event: getAll(accountid), add, remove,update, getAllAttendats, top events
