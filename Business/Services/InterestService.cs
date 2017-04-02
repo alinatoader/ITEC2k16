@@ -18,6 +18,18 @@ namespace Business.Services
             im = new InterestMapping();
         }
 
+        public WebInterest add(WebInterest model)
+        {
+            using (var uow = new UnitOfWork())
+            {
+                var repo = uow.getRepository<DBInterest>();
+                var co = im.ToDBModel(model);
+                repo.save(co);
+                uow.saveChanges();
+                var i = repo.getAll().FirstOrDefault(x => x.Type == co.Type && x.Name == co.Name);
+                return im.ToWebModel(i);
+            }
+        }
         public int add(int interestId,int accountId)
         {
             using (var uow = new UnitOfWork())

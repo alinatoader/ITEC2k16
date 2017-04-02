@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using WebApp.Models;
 
 namespace WebApp.Controllers
 {
@@ -14,6 +15,13 @@ namespace WebApp.Controllers
         {
             service = new InterestService();
         }
+        public IHttpActionResult PostInterest(WebInterest model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+            return Ok(service.add(model));
+        }
+
         [Route("api/Interest/Top/{id}")]
         public IHttpActionResult Get(int id)
         {

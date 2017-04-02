@@ -12,7 +12,9 @@ export class InterestsComponent implements OnInit {
     private places:any;
     private myInterests:any;
     private matchInterests:boolean = false;
-
+    private newInterestF:any ={Type:"Food",Name:null};
+    private newInterestL:any ={Type:"Location",Name:null};
+    private newInterestP:any ={Type:"Eating_Place",Name:null};
     constructor(private router:Router, private interestService:InterestService) {
     }
 
@@ -24,7 +26,29 @@ export class InterestsComponent implements OnInit {
         })
         .catch(e=>console.log("Error at getting interests type food"));
     }
-
+    addInterest(type:any){
+        var newInterest = {Type:type,Name:null};
+        if (this.newInterestF.Name != null && this.newInterestF.Type==type)
+            newInterest.Name=this.newInterestF.Name;
+        if (this.newInterestL.Name != null && this.newInterestL.Type==type)
+            newInterest.Name=this.newInterestL.Name;
+        if (this.newInterestP.Name != null && this.newInterestP.Type==type)
+            newInterest.Name=this.newInterestP.Name;
+        console.log(newInterest);
+        
+        this.interestService.addInterest(newInterest).then(res=>{
+            if(newInterest.Type==this.food[0].Type)
+                this.food.push(res);
+            if(newInterest.Type==this.location[0].Type)
+                this.location.push(res);
+            if(newInterest.Type=this.places[0].Type)
+                this.places.push(res);
+              this.newInterestF ={Type:"Food",Name:null};
+              this.newInterestL ={Type:"Location",Name:null};
+              this.newInterestP ={Type:"Eating_Place",Name:null};
+        })
+        .catch(e=>console.log(e));
+    }
     initLocationInterests(){
              this.interestService.getInterests(2)
              .then(res=>{

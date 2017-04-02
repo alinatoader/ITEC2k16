@@ -6,7 +6,7 @@
     
     <div class="parent" *ngIf="matchInterests==true">
     <h2 style="text-align: center"> Choose your interests !! </h2>
-
+    
         <div  class="food">
             <h3 style="text-align: center">
                 Food
@@ -16,18 +16,28 @@
                 <li *ngFor="let f of food">{{f.Name}}
                     <div class="option">
                         <div *ngIf="!f.isMine">
-                            <button (click)="addInterests(f.Id)">
+                            <a  (click)="addInterests(f.Id)">
                                 <span class="glyphicon glyphicon-plus-sign" ></span>
-                            </button>
+                            </a>
                         </div>
                         <div *ngIf="f.isMine">
-                            <button (click)="removeInterests(f.Id)">
+                            <a (click)="removeInterests(f.Id)">
                                 <span class="glyphicon glyphicon-minus-sign" ></span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </li>
+                <li>
+                    <form>
+                    <div class="form-group">
+                        <label for="interest"> Another interest </label>
+                        <input class="form-control" name="Food" required [(ngModel)]="newInterestF.Name">
+                        <button (click)="addInterest(food[0].Type)">Save</button>
+                    </div>
+                </form>
+                </li>
             </ul>
+
         </div>
         <div  class="location">
             <h3 style="text-align: center">
@@ -39,18 +49,28 @@
                     {{f.Name}}
                     <div class="option">
                         <div *ngIf="!f.isMine">
-                            <button (click)="addInterests(f.Id)">
+                            <a  (click)="addInterests(f.Id)">
                                 <span class="glyphicon glyphicon-plus-sign" ></span>
-                            </button>
+                            </a>
                         </div>
                         <div *ngIf="f.isMine">
-                            <button (click)="removeInterests(f.Id)">
+                            <a (click)="removeInterests(f.Id)">
                                 <span class="glyphicon glyphicon-minus-sign" ></span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </li>
+                <li>
+                    <form>
+                    <div class="form-group">
+                        <label for="interest"> Another interest </label>
+                        <input class="form-control" name="Location"  required [(ngModel)]="newInterestL.Name">
+                        <button (click)="addInterest(location[0].Type)">Save</button>
+                    </div>
+                </form>
+                </li>
             </ul>
+           
         </div>
         <div  class="eatingplace">
             <h3 style="text-align: center">
@@ -62,18 +82,28 @@
                     {{f.Name}}
                     <div class="option">
                         <div *ngIf="!f.isMine">
-                            <button (click)="addInterests(f.Id)">
+                            <a  (click)="addInterests(f.Id)">
                                 <span class="glyphicon glyphicon-plus-sign" ></span>
-                            </button>
+                            </a>
                         </div>
                         <div *ngIf="f.isMine">
-                            <button (click)="removeInterests(f.Id)">
+                            <a (click)="removeInterests(f.Id)">
                                 <span class="glyphicon glyphicon-minus-sign" ></span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </li>
+                <li>
+                    <form>
+                    <div class="form-group">
+                        <label for="interest"> Another interest </label>
+                        <input class="form-control" name="Places" required  [(ngModel)]="newInterestP.Name">
+                        <button (click)="addInterest(places[0].Type)">Save</button>
+                    </div>
+                </form>
+                </li>
             </ul>
+            
         </div>
     </div>
 </body>

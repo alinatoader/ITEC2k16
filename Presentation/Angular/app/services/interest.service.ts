@@ -15,6 +15,14 @@ export class InterestService {
         this.options = new RequestOptions({ headers: this.headers });
     }
     
+     addInterest(param:any){
+         let string = JSON.stringify(param);
+         return this.http.post(this.baseUrl, string, this.options)
+         .toPromise()
+         .then(this.extractData)
+         .catch(this.handleError);
+
+     }
      addInterests(idAccount:number,idInterests:number){
          return this.http
             .post(this.baseUrl+"/Add/"+idInterests+"/"+idAccount,this.options)

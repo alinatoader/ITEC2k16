@@ -30,6 +30,13 @@ System.register(["@angular/core", "@angular/http", "rxjs/Rx"], function (exports
                     this.headers = new http_1.Headers({ 'Content-Type': 'application/json', 'Accept': 'q=0.8;application/json;q=0.9' });
                     this.options = new http_1.RequestOptions({ headers: this.headers });
                 }
+                addInterest(param) {
+                    let string = JSON.stringify(param);
+                    return this.http.post(this.baseUrl, string, this.options)
+                        .toPromise()
+                        .then(this.extractData)
+                        .catch(this.handleError);
+                }
                 addInterests(idAccount, idInterests) {
                     return this.http
                         .post(this.baseUrl + "/Add/" + idInterests + "/" + idAccount, this.options)
