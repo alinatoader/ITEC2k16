@@ -33,6 +33,35 @@ System.register(["@angular/core", "@angular/http", "rxjs/Rx"], function (exports
                 getComments(eventId) {
                     return Promise.resolve(this.http.get(this.baseUrl + "/" + eventId).map(res => res.json()).toPromise());
                 }
+                postComment(param) {
+                    let body = JSON.stringify(param);
+                    return this.http
+                        .post(this.baseUrl, body, this.options)
+                        .toPromise()
+                        .then(this.extractData)
+                        .catch(this.handleError);
+                }
+                putComment(param) {
+                    let body = JSON.stringify(param);
+                    return this.http
+                        .put(this.baseUrl, body, this.options)
+                        .toPromise()
+                        .then(this.extractData)
+                        .catch(this.handleError);
+                }
+                deleteComment(id) {
+                    return this.http
+                        .delete(this.baseUrl + "/" + id, this.options)
+                        .toPromise();
+                }
+                extractData(res) {
+                    let body = res.json();
+                    return body || {};
+                }
+                handleError(error) {
+                    console.error('An error occurred', error);
+                    return Promise.reject(error.message || error);
+                }
             };
             CommentService = __decorate([
                 core_1.Injectable(),

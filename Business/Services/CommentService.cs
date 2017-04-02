@@ -56,7 +56,7 @@ namespace Business.Services
                     return null;
                 repo.update(newComment.Id, cm.ToDBModel(newComment));
                 uow.saveChanges();
-                return newComment;
+                return cm.ToWebModel(repo.getAll().FirstOrDefault(c=>c.Id==newComment.Id));
             }
         }
         public List<WebComment> getAllByEventId(int id)
@@ -66,8 +66,14 @@ namespace Business.Services
                 var Event = uow.getRepository<DBEvent>().get(id);
                 if (Event == null)
                     return null;
+                List<DBComment> comments = Event.Comments.ToList();
+                Comparison<DBComment> cmp = (DBComment c1, DBComment c2) =>
+                {
+                    return c2.Time.CompareTo(c1.Time);
+                };
+                comments.Sort(cmp);
                 List<WebComment> list = new List<WebComment>();
-                foreach (var c in Event.Comments)
+                foreach (var c in comments)
                     list.Add(cm.ToWebModel(c));
                 return list;
             }

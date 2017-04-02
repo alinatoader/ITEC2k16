@@ -1,5 +1,7 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="event.component.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
  <div *ngIf="matchedEvents" class="parent">
@@ -110,19 +112,34 @@
     </div>
  
     <div class="comments" *ngIf="showComments">
-        <h3 style="text-align: center;"> {{eventTitle}}</h3>
+        <h3 style="text-align: center;"> {{event.Title}}</h3>
         <hr>
         <div *ngIf="comments!=0">
         <ul style="list-style-type: none">
             <li *ngFor="let comment of comments">
-                <h5 class="commentContent"> {{comment.User}}: {{comment.Content}}</h5>
-                <h5 class="commentTime">{{comment.Time}}</h5>
+                <div *ngIf="comment.UserId==user.Id" >
+                <h5 class="commentContent" title={{comment.Time}}> {{comment.User}}: {{comment.Content}}
+                   <button (click)="editComment(comment.Id)"> <i class="material-icons" style="font-size: 14px;display: inline">mode_edit</i></button>
+                    <button (click)="deleteComment(comment.Id)"><span class="glyphicon glyphicon-minus-sign"></span></button>
+                </h5>
+                </div>
+                <div *ngIf="comment.UserId!=user.Id">
+                    <h5 class="commentContent" title={{comment.Time}}> {{comment.User}}: {{comment.Content}}</h5>
+                </div>
             </li>
         </ul>
         </div>
         <div *ngIf="comments==0">
             <h4>There are no comments</h4>
         </div>
+        <hr>
+        <form style="padding: 10px;">
+        <div class="form-group" *ngIf="icommented==false || editcomment==true">
+            <label for="comment" style="text-align: center">New Comment</label>
+            <textarea  class="form-control" [(ngModel)]="newComment.Content" name="content" required></textarea>
+            <button (click)="saveComment()" style="float: right;padding: 5px 20px">Save</button>
+        </div>
+        </form>
     </div>
  </div>
 </body>
