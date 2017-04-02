@@ -6,10 +6,12 @@ import {AccountService} from '../services/account.service';
 import {InterestService} from '../services/interest.service';
 import {TypeOfInterestService} from '../services/typeofinterest.service';
 import {AuthenticationService} from '../services/authentication.service';
+import {CommentService} from '../services/comment.service';
 
 @Component({
     templateUrl: 'app/components/event.component.html',
-    providers:[EventService,AccountService,InterestService,TypeOfInterestService,AuthenticationService]
+    providers:[EventService,AccountService,InterestService,TypeOfInterestService,
+                AuthenticationService,CommentService]
 })
 
 export class EventComponent implements OnInit {
@@ -22,17 +24,21 @@ export class EventComponent implements OnInit {
     private allInterests:any=[];
     private interestTypes:any;
     private selectedType:any;
+    private comments:any;
+    private eventTitle:string;
 
     private matchedEvents:boolean=false;
+    private createEvent:boolean=false;
+    private showComments:boolean=false;
 
     constructor(private router:Router,private eventService:EventService,private accountService:AccountService,
                 private interestService:InterestService,private typeofinterestService:TypeOfInterestService,
-                private authService:AuthenticationService) {
+                private authService:AuthenticationService,private commentService:CommentService) {
       
     }
 
     loadEvents(){
-        this.eventService.getAll().then(events=>{
+        this.eventService.getForMe(this.user.Id).then(events=>{
             this.allEvents=events;
             this.loadMyEvents();
         })
@@ -169,7 +175,27 @@ export class EventComponent implements OnInit {
         this.selectedType=selectObject.options[selectObject.selectedIndex].value;
     }
 
-    
+    loadComments(event:any){
+        this.commentService.getComments(event.Id).then(comments=>{
+            this.comments=comments;    
+            this.eventTitle=event.Title;
+            this.loadUsersComments();
+        }).catch(e=>console.log(e));
+    }
+
+    loadUsersComments(){
+        if(this.comments==0)
+            {
+                this.showComments=true;
+                return;
+            }
+        this.comments.forEach(comment=>{
+            this.accountService.get(comment.UserId).then(user=>{
+                comment.User=user.FirstName+user.LastName;
+            }).catch(error=>console.log(error));
+        });
+        this.showComments=true;
+    }
 
     ngOnInit() {
         this.checkCredentials();

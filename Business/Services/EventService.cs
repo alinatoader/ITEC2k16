@@ -119,6 +119,38 @@ namespace Business.Services
             }
         }
 
+        public List<WebEvent> getByInterests(int accountId)
+        {
+            using(var uow=new UnitOfWork())
+            {
+                var account = uow.getRepository<DBAccount>().get(accountId);
+                if (account == null)
+                    return null;
+                if (account.Interests.Count == 0)
+                    return getAll();
+                List<DBEvent> events = uow.getRepository<DBEvent>().getAll().Where(e => e.StartTime > DateTime.Now).ToList();
+                Comparison<DBEvent> cmp = (DBEvent x, DBEvent y) =>
+                  {
+                      int foundx = 0,foundy=0;
+                      foreach (DBInterest ii in account.Interests)
+                      {
+                          foreach (DBInterest i in x.Tags)
+                              if (i.Id == ii.Id)
+                                  foundx++;
+                          foreach (DBInterest iii in y.Tags)
+                              if (iii.Id == ii.Id)
+                                  foundy++;
+                      }
+                      return foundy - foundx;
+                  };
+                events.Sort(cmp);
+                List<WebEvent> list = new List<WebEvent>();
+                foreach (var ee in events)
+                    list.Add(em.ToWebModel(ee));
+                return list;
+            }
+        }
+
 
     }
 }

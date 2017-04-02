@@ -10,7 +10,7 @@ System.register(["@angular/core", "@angular/http", "rxjs/Rx"], function (exports
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, http_1, AccountService;
+    var core_1, http_1, CommentService;
     return {
         setters: [
             function (core_1_1) {
@@ -23,44 +23,23 @@ System.register(["@angular/core", "@angular/http", "rxjs/Rx"], function (exports
             }
         ],
         execute: function () {
-            AccountService = class AccountService {
+            CommentService = class CommentService {
                 constructor(http) {
                     this.http = http;
-                    this.baseUrl = 'http://localhost:58107/api/Account';
+                    this.baseUrl = 'http://localhost:58107/api/Comment';
                     this.headers = new http_1.Headers({ 'Content-Type': 'application/json', 'Accept': 'q=0.8;application/json;q=0.9' });
                     this.options = new http_1.RequestOptions({ headers: this.headers });
                 }
-                getEventsForAccount(id) {
-                    return Promise.resolve(this.http.get(this.baseUrl + "/Events/" + id).map(res => res.json()).toPromise());
-                }
-                get(id) {
-                    return Promise.resolve(this.http.get(this.baseUrl + "/" + id).map(res => res.json()).toPromise());
-                }
-                joinEvent(idAccount, idEvent) {
-                    return this.http
-                        .post(this.baseUrl + "/Join/" + idAccount + "/" + idEvent, this.options)
-                        .toPromise();
-                }
-                unjoinEvent(idAccount, idEvent) {
-                    return this.http
-                        .delete(this.baseUrl + "/Unjoin/" + idAccount + "/" + idEvent, this.options)
-                        .toPromise();
-                }
-                extractData(res) {
-                    let body = res.json();
-                    return body || {};
-                }
-                handleError(error) {
-                    console.error('An error occurred', error);
-                    return Promise.reject(error.message || error);
+                getComments(eventId) {
+                    return Promise.resolve(this.http.get(this.baseUrl + "/" + eventId).map(res => res.json()).toPromise());
                 }
             };
-            AccountService = __decorate([
+            CommentService = __decorate([
                 core_1.Injectable(),
                 __metadata("design:paramtypes", [http_1.Http])
-            ], AccountService);
-            exports_1("AccountService", AccountService);
+            ], CommentService);
+            exports_1("CommentService", CommentService);
         }
     };
 });
-//# sourceMappingURL=account.service.js.map
+//# sourceMappingURL=comment.service.js.map

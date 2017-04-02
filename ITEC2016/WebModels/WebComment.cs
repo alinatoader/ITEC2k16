@@ -10,7 +10,7 @@ namespace WebApp.Models
     {
         private int id, eventId, userId;
         private string content;
-        private DateTime time;
+        private string time;
         public int Id { get => id; set => id = value; }
 
         [Required]
@@ -20,6 +20,6 @@ namespace WebApp.Models
         [Required]
         public string Content { get => content; set => content = value; }
         [Required]
-        public DateTime Time { get => time; set => time = value; }
+        public string Time { get => time; set => time = value; }
     }
 }

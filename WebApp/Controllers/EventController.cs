@@ -61,6 +61,15 @@ namespace WebApp.Controllers
             return Ok(ok);
         }
 
+        [Route("api/Event/Interests/{idAccount}")]
+        public IHttpActionResult GetEvents(int idAccount)
+        {
+            var ok = service.getByInterests(idAccount);
+            if (ok == null)
+                return BadRequest();
+            return Ok(ok);
+        }
+
         [Route("api/Event/Add/{eventId}/{interestId}")]
         public IHttpActionResult Post( int eventId, int interestId)
         {

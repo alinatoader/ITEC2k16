@@ -47,7 +47,7 @@ namespace WebApp.Controllers
             if (c == null)
                 return BadRequest();
             if (c.Count == 0)
-                return NotFound();
+                return Ok(0);
             return Ok(c);
         }
     }

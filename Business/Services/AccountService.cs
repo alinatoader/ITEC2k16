@@ -125,5 +125,16 @@ namespace Business.Services
                 return events;
             }
         }
+
+        public WebAccount get(int id)
+        {
+            using(var uow=new UnitOfWork())
+            {
+                var account = uow.getRepository<DBAccount>().get(id);
+                if (account == null)
+                    return null;
+                return am.ToWebModel(account);
+            }
+        }
     }
 }

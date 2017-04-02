@@ -66,5 +66,13 @@ namespace WebApp.Controllers
                 return BadRequest();
             return Ok(c);
         }
+
+        public IHttpActionResult GetUser(int id)
+        {
+            var c = service.get(id);
+            if (c == null)
+                return NotFound();
+            return Ok(c);
+        }
     }
 }

@@ -33,6 +33,9 @@ System.register(["@angular/core", "@angular/http", "rxjs/Rx"], function (exports
                 getAll() {
                     return Promise.resolve(this.http.get(this.baseUrl).map(res => res.json()).toPromise());
                 }
+                getForMe(id) {
+                    return Promise.resolve(this.http.get(this.baseUrl + "/Interests/" + id).map(res => res.json()).toPromise());
+                }
                 getAttendants(idEvent) {
                     return Promise.resolve(this.http.get(this.baseUrl + "/Attendants/" + idEvent).map(res => res.json()).toPromise());
                 }

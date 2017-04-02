@@ -1,4 +1,4 @@
-System.register(["@angular/core", "@angular/router", "../services/event.service", "../services/account.service", "../services/interest.service", "../services/typeofinterest.service", "../services/authentication.service"], function (exports_1, context_1) {
+System.register(["@angular/core", "@angular/router", "../services/event.service", "../services/account.service", "../services/interest.service", "../services/typeofinterest.service", "../services/authentication.service", "../services/comment.service"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10,7 +10,7 @@ System.register(["@angular/core", "@angular/router", "../services/event.service"
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, router_1, event_service_1, account_service_1, interest_service_1, typeofinterest_service_1, authentication_service_1, EventComponent;
+    var core_1, router_1, event_service_1, account_service_1, interest_service_1, typeofinterest_service_1, authentication_service_1, comment_service_1, EventComponent;
     return {
         setters: [
             function (core_1_1) {
@@ -33,23 +33,29 @@ System.register(["@angular/core", "@angular/router", "../services/event.service"
             },
             function (authentication_service_1_1) {
                 authentication_service_1 = authentication_service_1_1;
+            },
+            function (comment_service_1_1) {
+                comment_service_1 = comment_service_1_1;
             }
         ],
         execute: function () {
             EventComponent = class EventComponent {
-                constructor(router, eventService, accountService, interestService, typeofinterestService, authService) {
+                constructor(router, eventService, accountService, interestService, typeofinterestService, authService, commentService) {
                     this.router = router;
                     this.eventService = eventService;
                     this.accountService = accountService;
                     this.interestService = interestService;
                     this.typeofinterestService = typeofinterestService;
                     this.authService = authService;
+                    this.commentService = commentService;
                     this.newEvent = {};
                     this.allInterests = [];
                     this.matchedEvents = false;
+                    this.createEvent = false;
+                    this.showComments = false;
                 }
                 loadEvents() {
-                    this.eventService.getAll().then(events => {
+                    this.eventService.getForMe(this.user.Id).then(events => {
                         this.allEvents = events;
                         this.loadMyEvents();
                     })
@@ -171,6 +177,25 @@ System.register(["@angular/core", "@angular/router", "../services/event.service"
                     var selectObject = document.getElementById("selecTypes");
                     this.selectedType = selectObject.options[selectObject.selectedIndex].value;
                 }
+                loadComments(event) {
+                    this.commentService.getComments(event.Id).then(comments => {
+                        this.comments = comments;
+                        this.eventTitle = event.Title;
+                        this.loadUsersComments();
+                    }).catch(e => console.log(e));
+                }
+                loadUsersComments() {
+                    if (this.comments == 0) {
+                        this.showComments = true;
+                        return;
+                    }
+                    this.comments.forEach(comment => {
+                        this.accountService.get(comment.UserId).then(user => {
+                            comment.User = user.FirstName + user.LastName;
+                        }).catch(error => console.log(error));
+                    });
+                    this.showComments = true;
+                }
                 ngOnInit() {
                     this.checkCredentials();
                     this.loadEvents();
@@ -180,11 +205,12 @@ System.register(["@angular/core", "@angular/router", "../services/event.service"
             EventComponent = __decorate([
                 core_1.Component({
                     templateUrl: 'app/components/event.component.html',
-                    providers: [event_service_1.EventService, account_service_1.AccountService, interest_service_1.InterestService, typeofinterest_service_1.TypeOfInterestService, authentication_service_1.AuthenticationService]
+                    providers: [event_service_1.EventService, account_service_1.AccountService, interest_service_1.InterestService, typeofinterest_service_1.TypeOfInterestService,
+                        authentication_service_1.AuthenticationService, comment_service_1.CommentService]
                 }),
                 __metadata("design:paramtypes", [router_1.Router, event_service_1.EventService, account_service_1.AccountService,
                     interest_service_1.InterestService, typeofinterest_service_1.TypeOfInterestService,
-                    authentication_service_1.AuthenticationService])
+                    authentication_service_1.AuthenticationService, comment_service_1.CommentService])
             ], EventComponent);
             exports_1("EventComponent", EventComponent);
         }

@@ -19,6 +19,10 @@ export class AccountService {
         return Promise.resolve(this.http.get(this.baseUrl+"/Events/"+id).map(res=>res.json()).toPromise());
     }
 
+    get(id:number):Promise<any>{
+        return Promise.resolve(this.http.get(this.baseUrl+"/"+id).map(res=>res.json()).toPromise());
+    }
+
     joinEvent(idAccount:number,idEvent:number)
     {
         return this.http

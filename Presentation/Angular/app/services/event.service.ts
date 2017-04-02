@@ -19,6 +19,10 @@ export class EventService {
         return Promise.resolve(this.http.get(this.baseUrl).map(res=>res.json()).toPromise());
     }
 
+    getForMe(id:number):Promise<any>{
+        return Promise.resolve(this.http.get(this.baseUrl+"/Interests/"+id).map(res=>res.json()).toPromise());
+    }
+
    getAttendants(idEvent:number){
        return Promise.resolve(this.http.get(this.baseUrl+"/Attendants/"+idEvent).map(res=>res.json()).toPromise());
    }

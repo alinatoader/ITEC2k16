@@ -1,6 +1,7 @@
 ﻿using ITEC2016.DBModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace Business.EntitiesMapping
             comment.EventId = model.EventId;
             comment.UserId = model.UserId;
             comment.Content = model.Content;
-            comment.Time = model.Time;
+            comment.Time = DateTime.ParseExact(model.Time, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
 
             return comment;
         }
@@ -31,7 +32,7 @@ namespace Business.EntitiesMapping
             comment.EventId = model.EventId;
             comment.UserId = model.UserId;
             comment.Content = model.Content;
-            comment.Time = model.Time;
+            comment.Time = model.Time.ToString();
             return comment;
         }
     }
