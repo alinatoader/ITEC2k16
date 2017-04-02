@@ -19,7 +19,7 @@ namespace WebApp.Models
         public int UserId { get => userId; set => userId = value; }
         [Required]
         public string Content { get => content; set => content = value; }
-        [Required]
+        
         public string Time { get => time; set => time = value; }
     }
 }

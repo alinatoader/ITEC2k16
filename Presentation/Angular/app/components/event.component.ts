@@ -25,11 +25,14 @@ export class EventComponent implements OnInit {
     private interestTypes:any;
     private selectedType:any;
     private comments:any;
-    private eventTitle:string;
+    private event:any={};
+    private newComment:any={};
 
     private matchedEvents:boolean=false;
     private createEvent:boolean=false;
     private showComments:boolean=false;
+    private icommented:boolean=false;
+    private editcomment:boolean=false;
 
     constructor(private router:Router,private eventService:EventService,private accountService:AccountService,
                 private interestService:InterestService,private typeofinterestService:TypeOfInterestService,
@@ -176,9 +179,10 @@ export class EventComponent implements OnInit {
     }
 
     loadComments(event:any){
+        this.icommented=false;
         this.commentService.getComments(event.Id).then(comments=>{
             this.comments=comments;    
-            this.eventTitle=event.Title;
+            this.event=event;
             this.loadUsersComments();
         }).catch(e=>console.log(e));
     }
@@ -191,10 +195,53 @@ export class EventComponent implements OnInit {
             }
         this.comments.forEach(comment=>{
             this.accountService.get(comment.UserId).then(user=>{
+                if(user.Id==this.user.Id)
+                    {comment.User="Me";
+                    this.icommented=true;}
+                else
                 comment.User=user.FirstName+user.LastName;
             }).catch(error=>console.log(error));
         });
         this.showComments=true;
+    }
+
+    saveComment(){
+
+        if(this.editcomment==false){
+            this.newComment.UserId=this.user.Id;
+            this.newComment.EventId=this.event.Id;
+            this.commentService.postComment(this.newComment).then(comment=>{
+                comment.User="Me";
+                if(this.comments==0)
+                    this.comments=[];
+                this.comments.push(comment);
+                this.newComment={};
+                this.icommented=true;
+            }).catch(e=>console.log(e));
+        }
+        else{
+            this.newComment.UserId=this.user.Id;
+            this.newComment.EventId=this.event.Id;
+            this.commentService.putComment(this.newComment).then(comment=>{
+                this.loadComments(this.event);
+                this.editcomment=false;
+                this.newComment={};
+                })
+                
+            .catch(e=>console.log(e));
+        }
+    
+    }
+
+    editComment(id:number){
+        this.editcomment=true;
+        this.newComment.Id=id;
+    }
+
+    deleteComment(id:number){
+        this.commentService.deleteComment(id).then(c=>{
+            this.loadComments(this.event);
+        }).catch(e=>console.log(e));
     }
 
     ngOnInit() {

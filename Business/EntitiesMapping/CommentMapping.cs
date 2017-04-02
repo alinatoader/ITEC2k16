@@ -19,7 +19,7 @@ namespace Business.EntitiesMapping
             comment.EventId = model.EventId;
             comment.UserId = model.UserId;
             comment.Content = model.Content;
-            comment.Time = DateTime.ParseExact(model.Time, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+            comment.Time = DateTime.Now;
 
             return comment;
         }

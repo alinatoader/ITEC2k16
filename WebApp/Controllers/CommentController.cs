@@ -21,7 +21,7 @@ namespace WebApp.Controllers
             if(!ModelState.IsValid)
                 return BadRequest();
             var c = service.save(model);
-            if (model == null )
+            if (c == null )
                 return BadRequest();
             return Ok(c);
         }
