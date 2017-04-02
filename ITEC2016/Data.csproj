@@ -55,9 +55,9 @@
     <Compile Include="DBModels\DBEvent.cs" />
     <Compile Include="DBModels\DBInterest.cs" />
     <Compile Include="DBModels\TypeOfInterest.cs" />
-    <Compile Include="Migrations\201704011601573_1.cs" />
-    <Compile Include="Migrations\201704011601573_1.Designer.cs">
-      <DependentUpon>201704011601573_1.cs</DependentUpon>
+    <Compile Include="Migrations\201704021144325_1.cs" />
+    <Compile Include="Migrations\201704021144325_1.Designer.cs">
+      <DependentUpon>201704021144325_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Repository\CRUDRepository.cs" />
     <Compile Include="Repository\ICRUDRepository.cs" />
@@ -79,8 +79,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201704011601573_1.resx">
-      <DependentUpon>201704011601573_1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704021144325_1.resx">
+      <DependentUpon>201704021144325_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

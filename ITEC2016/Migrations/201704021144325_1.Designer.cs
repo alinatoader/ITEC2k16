@@ -13,7 +13,7 @@ namespace ITEC2016.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201704011601573_1"; }
+            get { return "201704021144325_1"; }
         }
         
         string IMigrationMetadata.Source

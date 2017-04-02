@@ -16,14 +16,14 @@
                 <li *ngFor="let f of food">{{f.Name}}
                     <div class="option">
                         <div *ngIf="!f.isMine">
-                            <a>
-                                <span class="glyphicon glyphicon-plus-sign"></span>
-                            </a>
+                            <button (click)="addInterests(f.Id)">
+                                <span class="glyphicon glyphicon-plus-sign" ></span>
+                            </button>
                         </div>
                         <div *ngIf="f.isMine">
-                            <a>
-                                <span class="glyphicon glyphicon-minus-sign"></span>
-                            </a>
+                            <button (click)="removeInterests(f.Id)">
+                                <span class="glyphicon glyphicon-minus-sign" ></span>
+                            </button>
                         </div>
                     </div>
                 </li>
@@ -39,14 +39,14 @@
                     {{f.Name}}
                     <div class="option">
                         <div *ngIf="!f.isMine">
-                                    <a>
-                                        <span class="glyphicon glyphicon-plus-sign"></span>
-                                    </a>
-                                </div>
-                                <div *ngIf="f.isMine">
-                                    <a>
-                                        <span class="glyphicon glyphicon-minus-sign"></span>
-                                    </a>
+                            <button (click)="addInterests(f.Id)">
+                                <span class="glyphicon glyphicon-plus-sign" ></span>
+                            </button>
+                        </div>
+                        <div *ngIf="f.isMine">
+                            <button (click)="removeInterests(f.Id)">
+                                <span class="glyphicon glyphicon-minus-sign" ></span>
+                            </button>
                         </div>
                     </div>
                 </li>
@@ -62,15 +62,15 @@
                     {{f.Name}}
                     <div class="option">
                         <div *ngIf="!f.isMine">
-                                <a onclick="click()">
-                                    <span class="glyphicon glyphicon-plus-sign" ></span>
-                                </a>
-                            </div>
-                            <div *ngIf="f.isMine">
-                                <a onclick="click()">
-                                    <span class="glyphicon glyphicon-minus-sign" ></span>
-                                </a>
-                            </div>
+                            <button (click)="addInterests(f.Id)">
+                                <span class="glyphicon glyphicon-plus-sign" ></span>
+                            </button>
+                        </div>
+                        <div *ngIf="f.isMine">
+                            <button (click)="removeInterests(f.Id)">
+                                <span class="glyphicon glyphicon-minus-sign" ></span>
+                            </button>
+                        </div>
                     </div>
                 </li>
             </ul>
